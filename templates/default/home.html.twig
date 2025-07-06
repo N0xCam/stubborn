@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue {{ app.user.stubborn }}</h1>
+    <p>Tu es connecté avec succès 🎉</p>
+    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+{% endblock %}
