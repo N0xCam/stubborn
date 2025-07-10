@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon tableau de bord{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue {{ app.user.stubborn }}</h1>
+
+    <ul>
+        <li>Email : {{ app.user.email }}</li>
+        <li>Adresse de livraison : {{ app.user.deliveryAddress }}</li>
+        <li>Rôles : {{ app.user.roles|join(', ') }}</li>
+    </ul>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="background: #eee; padding: 1em; margin-top: 1em;">
+            <h2>Section administrateur 👑</h2>
+            <p>Outils d'admin</p>
+        </div>
+    {% endif %}
+
+    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+{% endblock %}
