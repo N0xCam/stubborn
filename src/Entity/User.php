@@ -72,7 +72,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // garantit au moins un rôle par défaut
         $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
@@ -115,14 +114,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
-    public function getAdresseLivraison(): ?string
-    {
-        return $this->adresseLivraison;
-    }
-
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
         return $this;
     }
 }
+
