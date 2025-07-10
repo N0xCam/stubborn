@@ -1,34 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<h1>Connexion</h1>
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+{% if error %}
+    <div class="alert alert-danger">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    </div>
+{% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputStubborn">Stubborn</label>
-    <input type="text" value="{{ last_username }}" name="stubborn" id="inputStubborn" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+{% if app.user %}
+    <div class="mb-3">
+        Vous êtes déjà connecté(e) en tant que {{ app.user.userIdentifier }},
+        <a href="{{ path('app_logout') }}">déconnexion</a>
+    </div>
+{% endif %}
 
-    <div class="checkbox mb-3">
+<form method="post" action="{{ path('app_login') }}" data-turbo="false">
+    <div>
+        <label for="stubborn">Identifiant</label>
+        <input type="text" value="{{ last_username }}" name="stubborn" id="stubborn" required autofocus>
+    </div>
+
+    <div>
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password" required>
+    </div>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    <div>
         <label>
-            <input type="checkbox" name="_remember_me"> Remember me
+            <input type="checkbox" name="_remember_me"> Se souvenir de moi
         </label>
     </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
+    <div>
+        <button type="submit">Connexion</button>
+    </div>
 </form>
 {% endblock %}

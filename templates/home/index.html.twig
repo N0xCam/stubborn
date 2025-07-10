@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bienvenue {{ user.stubborn }}</h1>
+
+    <p>Ceci est ton espace personnel.</p>
+
+    <ul>
+        <li>Email : {{ user.email }}</li>
+        <li>Adresse de livraison : {{ user.deliveryAddress }}</li>
+        <li>Rôles : {{ user.roles|join(', ') }}</li>
+    </ul>
+
+    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+{% endblock %}

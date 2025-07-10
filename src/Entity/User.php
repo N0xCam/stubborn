@@ -14,22 +14,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['stubborn'], message: 'There is already an account with this stubborn')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-
-    #[ORM\Column(length: 180, unique: true)]
-private ?string $email = null;
-
-public function getEmail(): ?string
-{
-    return $this->email;
-}
-
-public function setEmail(string $email): static
-{
-    $this->email = $email;
-
-    return $this;
-}
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -37,6 +21,9 @@ public function setEmail(string $email): static
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $stubborn = null;
+
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -63,6 +50,17 @@ public function setEmail(string $email): static
     public function setStubborn(string $stubborn): static
     {
         $this->stubborn = $stubborn;
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
         return $this;
     }
 
@@ -97,7 +95,7 @@ public function setEmail(string $email): static
 
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // effacer les données sensibles si besoin
     }
 
     public function getDeliveryAddress(): ?string
@@ -111,13 +109,6 @@ public function setEmail(string $email): static
         return $this;
     }
 
-    public function __serialize(): array
-    {
-        $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
-        return $data;
-    }
-
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -126,7 +117,7 @@ public function setEmail(string $email): static
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
-
         return $this;
     }
 }
+

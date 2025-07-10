@@ -29,7 +29,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): Passport
     {
         $stubborn = $request->getPayload()->getString('stubborn');
-
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $stubborn);
 
         return new Passport(
@@ -48,11 +47,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        $user = $token->getUser();
+
+        if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
-
-
     }
 
     protected function getLoginUrl(Request $request): string
