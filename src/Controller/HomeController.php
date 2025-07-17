@@ -10,10 +10,15 @@ use App\Repository\ProductRepository;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+   #[Route('/', name: 'app_home')]
 public function index(ProductRepository $productRepository): Response
 {
-    $products = $productRepository->findBy([], ['id' => 'DESC'], 3); // les 3 derniers
+    $products = $productRepository->findBy(
+        ['isFeatured' => true],
+        ['createdAt' => 'DESC'],
+        3
+    );
+
     return $this->render('home/index.html.twig', [
         'products' => $products,
     ]);
