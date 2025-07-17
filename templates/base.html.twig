@@ -141,23 +141,20 @@
     </head>
 
     <nav>
-  <ul>
-    {% if app.user %}
+    <ul>
         <li><a href="{{ path('app_home') }}">Accueil</a></li>
-        
-        {% if 'ROLE_ADMIN' in app.user.roles %}
-            <li><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
 
-
+        {% if app.user %}
+            <li><a href="{{ path('app_product_index') }}">Boutique</a></li>
+            <li><a href="#">Panier</a></li>
+            <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+        {% else %}
+            <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+            <li><a href="{{ path('app_register') }}">S’inscrire</a></li>
         {% endif %}
-
-        <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
-        <li>Bonjour {{ app.user.stubborn }}</li>
-    {% else %}
-        <li><a href="{{ path('app_login') }}">Connexion</a></li>
-    {% endif %}
-  </ul>
+    </ul>
 </nav>
+
 
     <body>
         {% block body %}{% endblock %}
