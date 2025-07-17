@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-office – Produits{% endblock %}
+
+{% block body %}
+    <h1>Back-office – Gestion des produits</h1>
+
+    <a href="{{ path('app_product_new') }}" class="add-button">➕ Ajouter un nouveau produit</a>
+
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prix (€)</th>
+                <th>XS</th>
+                <th>S</th>
+                <th>M</th>
+                <th>L</th>
+                <th>XL</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td><img src="{{ product.image }}" alt="{{ product.name }}" class="product-image"></td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stockXS }}</td>
+                <td>{{ product.stockS }}</td>
+                <td>{{ product.stockM }}</td>
+                <td>{{ product.stockL }}</td>
+                <td>{{ product.stockXL }}</td>
+                <td class="actions">
+                    <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="edit-button">✏️ Modifier</a>
+                    <form method="post" action="{{ path('app_product_delete', {'id': product.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                    <button class="delete-button">🗑️ Supprimer</button>
+                    </form>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="9">Aucun produit</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

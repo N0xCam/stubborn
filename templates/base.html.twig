@@ -1,5 +1,133 @@
 <!DOCTYPE html>
 <html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #a0dcf0;
+        margin: 20px;
+    }
+
+    .product-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        margin-top: 20px;
+    }
+
+    .product-table th, .product-table td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .product-image {
+        width: 50px;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    .add-button {
+        display: inline-block;
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .add-button:hover {
+        background-color: #0056b3;
+    }
+
+    .actions {
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .edit-button, .delete-button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .edit-button {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .delete-button {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.product-form label {
+    font-weight: bold;
+}
+
+.product-form input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.save-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+</style>
+
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -19,6 +147,8 @@
         
         {% if 'ROLE_ADMIN' in app.user.roles %}
             <li><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+
+
         {% endif %}
 
         <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
