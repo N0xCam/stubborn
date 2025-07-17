@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un produit{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un nouveau produit</h1>
+
+    {{ form_start(form) }}
+
+        <div>
+            {{ form_label(form.name, 'Nom') }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div>
+            {{ form_label(form.price, 'Prix') }}
+            {{ form_widget(form.price) }}
+        </div>
+        <div>
+            {{ form_label(form.image, 'Image') }}
+            {{ form_widget(form.image) }}
+        </div>
+        <div>
+            {{ form_label(form.stockXS, 'Stock XS') }}
+            {{ form_widget(form.stockXS) }}
+        </div>
+        <div>
+            {{ form_label(form.stockS, 'Stock S') }}
+            {{ form_widget(form.stockS) }}
+        </div>
+        <div>
+            {{ form_label(form.stockM, 'Stock M') }}
+            {{ form_widget(form.stockM) }}
+        </div>
+        <div>
+            {{ form_label(form.stockL, 'Stock L') }}
+            {{ form_widget(form.stockL) }}
+        </div>
+        <div>
+            {{ form_label(form.stockXL, 'Stock XL') }}
+            {{ form_widget(form.stockXL) }}
+        </div>
+
+        <button type="save-button">AJOUTER</button>
+
+    {{ form_end(form) }}
+
+    <p><a href="{{ path('app_product_index') }}" class="back-link">← Retour à la liste</a></p>
+{% endblock %}
