@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Form\AddToCartType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/product')]
 final class ProductController extends AbstractController
@@ -35,14 +36,14 @@ final class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('image')->getData();
-        if ($imageFile) {
-        $newFilename = uniqid().'.'.$imageFile->guessExtension();
-        $imageFile->move(
-            $this->getParameter('images_directory'), // À configurer dans services.yaml
-            $newFilename
-        );
-        $product->setImage($newFilename);
-    }
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+                $product->setImage($newFilename);
+            }
 
             $product->setCreatedAt(new \DateTimeImmutable());
             $product->setUpdatedAt(new \DateTimeImmutable());
@@ -59,11 +60,30 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    #[Route('/{id}/view', name: 'app_product_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Product $product): Response
     {
+        $form = $this->createForm(AddToCartType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $size = $form->get('size')->getData();
+
+            // Ajout au panier en session
+            $cart = $request->getSession()->get('cart', []);
+            $cart[] = [
+                'product_id' => $product->getId(),
+                'size' => $size,
+            ];
+            $request->getSession()->set('cart', $cart);
+
+            $this->addFlash('success', "Produit ajouté au panier en taille $size !");
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+        }
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -84,7 +104,7 @@ final class ProductController extends AbstractController
 
                 try {
                     $imageFile->move(
-                        $this->getParameter('product_images_directory'),
+                        $this->getParameter('images_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
@@ -108,10 +128,10 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($product);
             $entityManager->flush();
         }

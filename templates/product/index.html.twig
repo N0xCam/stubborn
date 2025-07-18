@@ -24,7 +24,8 @@
         <tbody>
         {% for product in products %}
             <tr>
-                <td><img src="{{ product.image }}" alt="{{ product.name }}" class="product-image"></td>
+                <td><img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" width="80">
+</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.stockXS }}</td>

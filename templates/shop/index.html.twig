@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique{% endblock %}
+
+{% block body %}
+    <h1>Nos sweat-shirts</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.minPrice) }}
+        {{ form_row(form.maxPrice) }}
+        <button type="submit">Filtrer</button>
+    {{ form_end(form) }}
+
+    <div class="product-list">
+        {% for product in products %}
+            <div class="product-card">
+                <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" width="150">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.price }} €</p>
+                <a href="{{ path('app_product_show', { id: product.id }) }}">Voir</a>
+
+
+            </div>
+        {% else %}
+            <p>Aucun produit trouvé pour cette fourchette de prix.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
