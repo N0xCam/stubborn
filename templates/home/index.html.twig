@@ -5,35 +5,25 @@
 {% block body %}
     <h1>Bienvenue chez Stubborn</h1>
 
-    {% if app.user %}
-        <nav>
-            <a href="{{ path('app_home') }}">Accueil</a> |
-            <a href="#">Boutique</a> |
-            <a href="#">Panier</a> |
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-        </nav>
-    {% else %}
-      
-    {% endif %}
-
-    <section class="featured-products">
+    <section>
         <h2>Nos modèles phares</h2>
-        <div class="products">
+
+        <div class="featured-products">
             {% for product in products %}
                 <div class="product-card">
-                    <img src="{{ product.image }}" alt="{{ product.name }}" width="200">
+                    <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" width="200">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.price }} €</p>
-                    <a href="{{ path('app_product_show', { id: product.id }) }}">Voir le produit</a>
+                    <a href="{{ path('app_product_show', {id: product.id}) }}">Voir le produit</a>
                 </div>
+            {% else %}
+                <p>Aucun produit mis en avant pour le moment.</p>
             {% endfor %}
         </div>
     </section>
 
-    <section class="about">
-        <h2>Qui sommes-nous ?</h2>
-        <p>
-            Stubborn est une marque fière, indépendante et stylée. Nous créons des sweats uniques, pour les esprits libres qui n'ont pas peur d'affirmer leur caractère.
-        </p>
+    <section>
+        <h2>À propos de Stubborn</h2>
+        <p>Stubborn est une marque engagée qui conçoit des sweat-shirts uniques, éthiques et durables. Inspirés par la créativité et la détermination, nos produits sont pensés pour ceux qui osent affirmer leur style avec conviction.</p>
     </section>
 {% endblock %}

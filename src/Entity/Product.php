@@ -47,6 +47,9 @@ class Product
     #[ORM\Column(type: 'integer')]
     private ?int $stockXL = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isFeatured = false;
+
     #[ORM\PrePersist]
     public function onPrePersist(): void
     {
@@ -83,4 +86,14 @@ class Product
     public function setStockL(int $stockL): self { $this->stockL = $stockL; return $this; }
     public function getStockXL(): ?int { return $this->stockXL; }
     public function setStockXL(int $stockXL): self { $this->stockXL = $stockXL; return $this; }
+    public function isFeatured(): bool
+{
+    return $this->isFeatured;
+}
+
+public function setIsFeatured(bool $isFeatured): self
+{
+    $this->isFeatured = $isFeatured;
+    return $this;
+}
 }

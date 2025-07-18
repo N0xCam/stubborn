@@ -1,0 +1,12 @@
+<h1>Votre panier</h1>
+
+{% for item in cart %}
+    <div style="margin-bottom: 20px;">
+        <img src="{{ asset('uploads/images/' ~ item.product.image) }}" alt="" width="100">
+        <p>{{ item.product.name }}</p>
+        <p>Taille : {{ item.size }}</p>
+        <p>Quantité : {{ item.quantity }}</p>
+    </div>
+{% else %}
+    <p>Votre panier est vide.</p>
+{% endfor %}
