@@ -49,4 +49,14 @@ class CheckoutController extends AbstractController
 
         return $this->json(['id' => $session->id]);
     }
+
+    #[Route('/success', name: 'app_success')]
+public function success(Request $request): Response
+{
+    // On vide le panier
+    $request->getSession()->remove('cart');
+
+    return $this->render('checkout/success.html.twig');
+}
+
 }
