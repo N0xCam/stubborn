@@ -6,7 +6,17 @@
         <p>{{ item.product.name }}</p>
         <p>Taille : {{ item.size }}</p>
         <p>Quantité : {{ item.quantity }}</p>
+
+<a href="{{ path('app_cart_remove', { id: item.product.id, size: item.size }) }}">
+    Supprimer du panier
+</a>
+
     </div>
+
+    <form method="POST" action="{{ path('app_checkout') }}">
+    <button type="submit">Payer avec Stripe</button>
+</form>
+
 {% else %}
     <p>Votre panier est vide.</p>
 {% endfor %}

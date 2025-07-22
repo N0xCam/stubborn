@@ -10,11 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
 {
-   #[Route('/cart', name: 'app_cart')]
+#[Route('/cart', name: 'app_cart')]
 public function index(Request $request, ProductRepository $productRepository): Response
 {
     $cart = $request->getSession()->get('cart', []);
-
     $cartItems = [];
 
     foreach ($cart as $item) {
@@ -23,14 +22,37 @@ public function index(Request $request, ProductRepository $productRepository): R
             $cartItems[] = [
                 'product' => $product,
                 'size' => $item['size'],
-                'quantity' => 1, // tu peux gérer les quantités plus tard si besoin
+                'quantity' => 1,
             ];
         }
     }
 
     return $this->render('cart/index.html.twig', [
-        'cart' => $cartItems, // <<< C’est ça qui manquait
+        'cart' => $cartItems,
     ]);
 }
+
+
+  #[Route('/cart/remove/{id}/{size}', name: 'app_cart_remove')]
+public function remove(int $id, string $size, Request $request): Response
+{
+    $cart = $request->getSession()->get('cart', []);
+
+    foreach ($cart as $index => $item) {
+        if ($item['product_id'] === $id && $item['size'] === $size) {
+            unset($cart[$index]);
+            // Re-indexer le tableau pour éviter les trous
+            $cart = array_values($cart);
+            break;
+        }
+    }
+
+    $request->getSession()->set('cart', $cart);
+
+    $this->addFlash('success', 'Produit retiré du panier.');
+
+    return $this->redirectToRoute('app_cart');
+}
+
 
 }
