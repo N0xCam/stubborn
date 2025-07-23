@@ -1,162 +1,58 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Stubborn{% endblock %}</title>
+    <link rel="stylesheet" href="{{ ('styles.css') }}">
+      <link rel="icon" type="image/x-icon" href="{{ asset('uploads/images/favicon.png') }}">
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #a0dcf0;
-        margin: 20px;
-    }
+   
+    <style>
+        a.active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+        <div>
+            <h1 style="margin: 0;">Stubborn</h1>
+            <img src="{{asset('uploads/images/logo.png') }}" width="80">
+            <small>Don't compromise on your look</small>
+        </div>
+        <nav>
+            {% set route = app.request.attributes.get('_route') %}
 
-    .product-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        margin-top: 20px;
-    }
+            {% if app.user %}
+                <a href="{{ path('app_home') }}"
+                   class="{{ route == 'app_home' ? 'active' : '' }}">Accueil</a> |
+                <a href="{{ path('app_shop') }}"
+                   class="{{ route == 'app_shop' ? 'active' : '' }}">Boutique</a> |
+                <a href="{{ path('app_cart') }}"
+                   class="{{ route == 'app_cart' ? 'active' : '' }}">Panier</a> |
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_home') }}"
+                   class="{{ route == 'app_home' ? 'active' : '' }}">Accueil</a> |
+                <a href="{{ path('app_register') }}"
+                   class="{{ route == 'app_register' ? 'active' : '' }}">S’inscrire</a> |
+                <a href="{{ path('app_login') }}"
+                   class="{{ route == 'app_login' ? 'active' : '' }}">Se connecter</a>
+            {% endif %}
+        </nav>
+    </header>
 
-    .product-table th, .product-table td {
-        border: 1px solid #ccc;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .product-image {
-        width: 50px;
-        height: auto;
-        border-radius: 4px;
-    }
-
-    .add-button {
-        display: inline-block;
-        margin-bottom: 15px;
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-    }
-
-    .add-button:hover {
-        background-color: #0056b3;
-    }
-
-    .actions {
-        display: flex;
-        gap: 5px;
-        justify-content: center;
-    }
-
-    .edit-button, .delete-button {
-        padding: 5px 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .edit-button {
-        background-color: #ffc107;
-        color: black;
-    }
-
-    .delete-button {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .product-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    margin-top: 20px;
-}
-
-.product-form label {
-    font-weight: bold;
-}
-
-.product-form input {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.save-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: fit-content;
-}
-
-.save-button:hover {
-    background-color: #218838;
-}
-
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-.back-link:hover {
-    text-decoration: underline;
-}
-
-.delete-button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-}
-
-</style>
-
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-
-    <nav>
-    <ul>
-        <li><a href="{{ path('app_home') }}">Accueil</a></li>
-
-        {% if app.user %}
-            <li><a href="{{ path('app_product_index') }}">Boutique</a></li>
-            <li><a href="#">Panier</a></li>
-            <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
-        {% else %}
-            <li><a href="{{ path('app_login') }}">Se connecter</a></li>
-            <li><a href="{{ path('app_register') }}">S’inscrire</a></li>
-        {% endif %}
-    </ul>
-</nav>
-
-
-    <body>
+    <main>
         {% block body %}{% endblock %}
-    </body>
+    </main>
+
+    <footer>
+        <h2>Stubborn</h2>
+        <address>Piccadilly Circus, London W1J 0DA, Royaume Uni</address>
+        <mail>stubborn@blabla.com</mail>
+        <em>Don't compromise on your look</em>
+        {% block footer %}{% endblock %}
+    </footer>
+</body>
 </html>

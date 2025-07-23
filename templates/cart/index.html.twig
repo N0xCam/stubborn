@@ -1,3 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
 <h1>Votre panier</h1>
 
 {% if cart is not empty %}
@@ -39,3 +43,5 @@
 {% else %}
     <p>Votre panier est vide.</p>
 {% endif %}
+
+{% endblock %}
