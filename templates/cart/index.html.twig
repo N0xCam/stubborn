@@ -1,22 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
 <h1>Votre panier</h1>
 
-{% for item in cart %}
-    <div style="margin-bottom: 20px;">
-        <img src="{{ asset('uploads/images/' ~ item.product.image) }}" alt="" width="100">
-        <p>{{ item.product.name }}</p>
-        <p>Taille : {{ item.size }}</p>
-        <p>Quantité : {{ item.quantity }}</p>
+{% if cart is not empty %}
+    {% set total = 0 %}
+    
+    {% for item in cart %}
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
+            <img src="{{ asset('uploads/images/' ~ item.product.image) }}" alt="{{ item.product.name }}" width="100">
+            <div style="flex: 1; padding: 0 20px;">
+                <p><strong>Nom :</strong> {{ item.product.name }}</p>
+                <p><strong>Prix :</strong> {{ item.product.price }} €</p>
+                <p><strong>Taille :</strong> {{ item.size }}</p>
+            </div>
+            <a href="{{ path('app_cart_remove', { id: item.product.id, size: item.size }) }}">
+                <button style="background-color: #f8d7da; border: 1px solid #f5c2c7; padding: 10px;">RETIRER DU PANIER</button>
+            </a>
+        </div>
+        {% set total = total + item.product.price %}
+    {% endfor %}
 
-<a href="{{ path('app_cart_remove', { id: item.product.id, size: item.size }) }}">
-    Supprimer du panier
-</a>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
+        <div style="font-weight: bold; font-size: 1.2em;">
+            TOTAL : {{ total }} €
+        </div>
+        <div>
+            <form action="{{ path('create_checkout_session') }}" method="POST" style="display: inline;">
+                <button type="submit" style="background-color: #f8d7da; border: 1px solid #f5c2c7; padding: 10px; margin-right: 10px;">
+                    FINALISER MA COMMANDE
+                </button>
+            </form>
 
+            <a href="{{ path('app_shop') }}">
+                <button style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 10px;">
+                    CONTINUER MES ACHATS
+                </button>
+            </a>
+        </div>
     </div>
-
-    <form method="POST" action="{{ path('app_checkout') }}">
-    <button type="submit">Payer avec Stripe</button>
-</form>
-
 {% else %}
     <p>Votre panier est vide.</p>
-{% endfor %}
+{% endif %}
+
+{% endblock %}
