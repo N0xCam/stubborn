@@ -1,18 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h2>S’inscrire</h2>
+<div class="form-wrapper">
+    <h2 class="form-title">S’inscrire</h2>
 
-{{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.stubborn) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.deliveryAddress) }}
-    {{ form_row(registrationForm.plainPassword.first) }}
-    {{ form_row(registrationForm.plainPassword.second) }}
-    {{ form_row(registrationForm.agreeTerms) }}
+    {{ form_start(registrationForm, { attr: { class: 'register-form' } }) }}
+        <div class="form-group">
+            {{ form_label(registrationForm.stubborn, 'Nom utilisateur :') }}
+            {{ form_widget(registrationForm.stubborn) }}
+        </div>
 
-    <button type="submit">Créer un compte</button>
-{{ form_end(registrationForm) }}
+        <div class="form-group">
+            {{ form_label(registrationForm.email, 'Adresse mail :') }}
+            {{ form_widget(registrationForm.email) }}
+        </div>
 
-<p>Déjà inscrit ? <a href="{{ path('app_login') }}">Se Connecter</a></p>
+        <div class="form-group">
+            {{ form_label(registrationForm.deliveryAddress, 'Adresse de livraison') }}
+            {{ form_widget(registrationForm.deliveryAddress) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(registrationForm.plainPassword.first, 'Mot de passe :') }}
+            {{ form_widget(registrationForm.plainPassword.first) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(registrationForm.plainPassword.second, 'Confirmer le mot de passe :') }}
+            {{ form_widget(registrationForm.plainPassword.second) }}
+        </div>
+
+        <div class="form-group checkbox">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            {{ form_label(registrationForm.agreeTerms, 'Accepter les conditions') }}
+        </div>
+
+        <button type="submit" class="btn-primary">Créer un compte</button>
+    {{ form_end(registrationForm) }}
+
+    <div class="already">
+        <p>Déjà inscrit ?</p>
+        <a class="btn-secondary" href="{{ path('app_login') }}">Se Connecter</a>
+    </div>
+</div>
 {% endblock %}

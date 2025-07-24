@@ -1,49 +1,160 @@
-.register-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: white;
+/* S'inscrire */
+
+.form-wrapper {
+    margin-left: auto;
+    width: 320px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 0;
+    font-family: Arial, sans-serif;
 }
 
-.register-container h2 {
-    text-align: center;
-}
-
-.register-container label {
-    font-weight: bold;
-}
-
-.register-container input {
-    width: 100%;
-    padding: 8px;
+.form-title {
+    font-size: 1em;
     margin-bottom: 15px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    font-weight: normal;
 }
 
-.create-account {
-    background-color: #3399ff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
+.register-form .form-group {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9em;
+}
+
+.register-form label {
+    margin-bottom: 4px;
+    font-weight: normal;
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+    padding: 6px;
+    border: 1px solid #000;
+    font-size: 0.9em;
+    border-radius: 0;
+}
+
+.register-form .checkbox {
+    flex-direction: row;
+    align-items: center;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.full-width {
     width: 100%;
 }
 
-.already-registered {
-    margin-top: 20px;
-    text-align: center;
+.btn-primary {
+    background-color: #66c6ff;
+    color: white;
+    padding: 6px 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 0;
+    font-size: 0.9em;
+    margin-top: 10px;
+    display: inline-block; 
+    width: auto;
 }
 
-.login-link {
-    display: inline-block;
-    margin-top: 5px;
-    background-color: #88ccff;
-    padding: 10px 20px;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
+.btn-primary:hover {
+    background-color: #33b2ff;
 }
+
+.already {
+    margin-top: 20px;
+    font-size: 0.9em;
+    border-top: 1px solid #e6f3fc;
+    padding-top: 10px;
+    text-align: left; 
+}
+
+.btn-secondary {
+    margin-top: 5px;
+    padding: 6px 12px;
+    background-color: #66c6ff;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 0;
+    font-size: 0.9em;
+    display: inline-block;
+}
+
+
+/* Formulaire de connexion */
+.login-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 25px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-container button {
+    padding: 10px;
+    background-color: #66c2ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-container button:hover {
+    background-color: #3399ff;
+}
+
+.login-container .link {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.login-container .link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-container .link a:hover {
+    text-decoration: underline;
+}
+
+.login-container hr {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
