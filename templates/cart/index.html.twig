@@ -10,7 +10,7 @@
     {% for item in cart %}
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
             <img src="{{ asset('uploads/images/' ~ item.product.image) }}" alt="{{ item.product.name }}" width="100">
-            <div style="flex: 1; padding: 0 20px;">
+            <div class="def-product">
                 <p><strong>Nom :</strong> {{ item.product.name }}</p>
                 <p><strong>Prix :</strong> {{ item.product.price }} €</p>
                 <p><strong>Taille :</strong> {{ item.size }}</p>
@@ -33,7 +33,7 @@
                 </button>
             </form>
 
-            <a href="{{ path('app_shop') }}">
+            <a href="{{ path('app_products') }}">
                 <button style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 10px;">
                     CONTINUER MES ACHATS
                 </button>
@@ -43,5 +43,30 @@
 {% else %}
     <p>Votre panier est vide.</p>
 {% endif %}
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe("{{ stripe_public_key }}");
+
+
+    const form = document.querySelector('form[action="{{ path("create_checkout_session") }}"]');
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const response = await fetch(form.action, {
+            method: "POST"
+        });
+
+        const session = await response.json();
+
+        if (session.id) {
+            stripe.redirectToCheckout({ sessionId: session.id });
+        } else {
+            alert("Une erreur est survenue.");
+        }
+    });
+</script>
+
 
 {% endblock %}

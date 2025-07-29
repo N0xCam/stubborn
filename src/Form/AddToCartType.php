@@ -2,16 +2,16 @@
 
 namespace App\Form;
 
-
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AddToCartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('size', ChoiceType::class, [
+            'label' => 'Taille',
             'choices' => [
                 'XS' => 'XS',
                 'S' => 'S',
@@ -19,8 +19,9 @@ class AddToCartType extends AbstractType
                 'L' => 'L',
                 'XL' => 'XL',
             ],
-            'expanded' => true,
-            'label' => 'Choisir une taille',
+            'expanded' => false,
+            'multiple' => false,
+            'required' => true,
         ]);
     }
 }

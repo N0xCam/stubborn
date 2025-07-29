@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Stubborn{% endblock %}</title>
-    <link rel="stylesheet" href="{{ ('styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
       <link rel="icon" type="image/x-icon" href="{{ asset('uploads/images/favicon.png') }}">
 
    
@@ -27,8 +27,8 @@
             {% if app.user %}
                 <a href="{{ path('app_home') }}"
                    class="{{ route == 'app_home' ? 'active' : '' }}">Accueil</a> |
-                <a href="{{ path('app_shop') }}"
-                   class="{{ route == 'app_shop' ? 'active' : '' }}">Boutique</a> |
+                <a href="{{ path('app_products') }}"
+                   class="{{ route == 'app_products' ? 'active' : '' }}">Boutique</a> |
                 <a href="{{ path('app_cart') }}"
                    class="{{ route == 'app_cart' ? 'active' : '' }}">Panier</a> |
                 <a href="{{ path('app_logout') }}">Se déconnecter</a>

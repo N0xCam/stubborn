@@ -17,20 +17,18 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
-public function findByPriceRange(?float $minPrice, ?float $maxPrice): array
+public function findByPriceRange(float $min, float $max): array
 {
-    $qb = $this->createQueryBuilder('p');
-
-    if ($minPrice !== null) {
-        $qb->andWhere('p.price >= :min')->setParameter('min', $minPrice);
-    }
-
-    if ($maxPrice !== null) {
-        $qb->andWhere('p.price <= :max')->setParameter('max', $maxPrice);
-    }
-
-    return $qb->getQuery()->getResult();
+    return $this->createQueryBuilder('p')
+        ->where('p.price >= :min')
+        ->andWhere('p.price <= :max')
+        ->setParameter('min', $min)
+        ->setParameter('max', $max)
+        ->orderBy('p.price', 'ASC')
+        ->getQuery()
+        ->getResult();
 }
+
 
 
 

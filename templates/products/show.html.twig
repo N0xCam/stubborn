@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+<div class="product-container">
+    <div class="product-card-show">
+        <div class="left">
+            <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+        </div>
+
+        <div class="right">
+            <table>
+                <tr>
+                    <td>{{ product.name }}</td>
+                </tr>
+                <tr>
+                    <td>{{ product.price }} €</td>
+                </tr>
+            </table>
+
+            {{ form_start(form, {'attr': {'class': 'product-form'}}) }}
+            {{ form_row(form.size) }}
+            <button type="submit" class="btn blue">AJOUTER AU PANIER</button>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
