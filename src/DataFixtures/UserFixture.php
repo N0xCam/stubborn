@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Tests\Fixtures;
+namespace App\DataFixtures;
+
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -16,11 +17,14 @@ class UserFixture extends Fixture
     public function load(ObjectManager $manager): void
     {
         $user = new User();
-        $user->setEmail(self::TEST_USER_EMAIL);
-        $user->setRoles(['ROLE_USER']);
-        $user->setPassword(
-            $this->passwordHasher->hashPassword($user, 'password')
-        );
+        $user->setStubborn('testuser') // <- CHAMP REQUIS
+             ->setEmail(self::TEST_USER_EMAIL)
+             ->setRoles(['ROLE_USER'])
+             ->setPassword(
+                $this->passwordHasher->hashPassword($user, 'password')
+             )
+             ->setDeliveryAddress('12 rue des Tests')
+             ->setIsVerified(true); // au cas où c’est bloquant
 
         $manager->persist($user);
         $manager->flush();
