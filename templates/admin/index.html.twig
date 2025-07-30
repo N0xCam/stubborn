@@ -1,50 +1,84 @@
-{# templates/admin/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Back-Office - Gestion des produits{% endblock %}
 
 {% block body %}
-<div class="dashboard-wrapper">
-    <h2>Back-office – Gestion des produits</h2>
+<div class="admin-dashboard-wrapper">
+    <h2 class="admin-title">Back-Office – Gestion des produits</h2>
 
     <!-- Formulaire d'ajout -->
-    <form method="post" enctype="multipart/form-data" action="{{ path('app_admin') }}" class="product-row add-row">
-        <div class="product-image-placeholder"></div>
-
-        <input type="text" name="product[name]" placeholder="Nom" required>
-        <input type="number" name="product[price]" placeholder="Prix (€)" step="0.01" required>
-        <input type="number" name="product[stock_xs]" placeholder="Stock XS">
-        <input type="number" name="product[stock_s]" placeholder="Stock S">
-        <input type="number" name="product[stock_m]" placeholder="Stock M">
-        <input type="number" name="product[stock_l]" placeholder="Stock L">
-        <input type="number" name="product[stock_xl]" placeholder="Stock XL">
-
-        <input type="file" name="product[image]" required class="file-input">
-
-        <button type="submit" class="btn blue">AJOUTER</button>
+    <form method="post" enctype="multipart/form-data" action="{{ path('app_admin') }}" class="admin-product-card admin-add-card">
+        <div class="admin-image-placeholder"></div>
+        <div class="admin-product-info">
+            <div class="admin-product-fields">
+                <label>Nom
+                    <input type="text" name="product[name]" required>
+                </label>
+                <label>Prix
+                    <input type="number" name="product[price]" step="0.01" required>
+                </label>
+                <label>Stock XS
+                    <input type="number" name="product[stock_xs]">
+                </label>
+                <label>Stock S
+                    <input type="number" name="product[stock_s]">
+                </label>
+                <label>Stock M
+                    <input type="number" name="product[stock_m]">
+                </label>
+                <label>Stock L
+                    <input type="number" name="product[stock_l]">
+                </label>
+                <label>Stock XL
+                    <input type="number" name="product[stock_xl]">
+                </label>
+                <input type="file" name="product[image]" class="admin-file-input" required>
+            </div>
+            <div class="admin-button-wrapper">
+                <button type="submit" class="btn blue">AJOUTER</button>
+            </div>
+        </div>
     </form>
 
     <!-- Liste des produits existants -->
     {% for product in products %}
-        <form method="post" action="{{ path('app_admin_edit', {'id': product.id}) }}" class="product-row" enctype="multipart/form-data">
-            <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="product-image">
-
-            <input type="text" name="name" value="{{ product.name }}" required>
-            <input type="number" name="price" value="{{ product.price }}" step="0.01" required>
-            <input type="number" name="stock_xs" value="{{ product.stockXS }}">
-            <input type="number" name="stock_s" value="{{ product.stockS }}">
-            <input type="number" name="stock_m" value="{{ product.stockM }}">
-            <input type="number" name="stock_l" value="{{ product.stockL }}">
-            <input type="number" name="stock_xl" value="{{ product.stockXL }}">
-
-            <div class="button-group">
-                <button type="submit" class="btn blue">MODIFIER</button>
-        </form>
-        <form method="post" action="{{ path('app_admin_delete', {'id': product.id}) }}">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
-            <button type="submit" class="btn red">SUPPRIMER</button>
-        </form>
+        <div class="admin-product-card">
+            <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="admin-product-image">
+            <div class="admin-product-info">
+                <form method="post" action="{{ path('app_admin_edit', {'id': product.id}) }}" enctype="multipart/form-data">
+                    <div class="admin-product-fields">
+                        <label>Nom
+                            <input type="text" name="name" value="{{ product.name }}" required>
+                        </label>
+                        <label>Prix
+                            <input type="number" name="price" value="{{ product.price }}" step="0.01" required>
+                        </label>
+                        <label>Stock XS
+                            <input type="number" name="stock_xs" value="{{ product.stockXS }}">
+                        </label>
+                        <label>Stock S
+                            <input type="number" name="stock_s" value="{{ product.stockS }}">
+                        </label>
+                        <label>Stock M
+                            <input type="number" name="stock_m" value="{{ product.stockM }}">
+                        </label>
+                        <label>Stock L
+                            <input type="number" name="stock_l" value="{{ product.stockL }}">
+                        </label>
+                        <label>Stock XL
+                            <input type="number" name="stock_xl" value="{{ product.stockXL }}">
+                        </label>
+                    </div>
+                    <div class="admin-button-wrapper">
+                        <button type="submit" class="btn blue">MODIFIER</button>
+                </form>
+                <form method="post" action="{{ path('app_admin_delete', {'id': product.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                    <button type="submit" class="btn red">SUPPRIMER</button>
+                </form>
+                    </div>
             </div>
+        </div>
     {% else %}
         <p>Aucun produit pour le moment.</p>
     {% endfor %}

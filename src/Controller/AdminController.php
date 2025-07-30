@@ -26,8 +26,8 @@ class AdminController extends AbstractController
     ): Response {
         // Gestion d'ajout de produit
         if ($request->isMethod('POST') && $request->request->has('product')) {
-            $data = $request->request->get('product');
-            $files = $request->files->get('product');
+            $data = $request->request->all('product');
+            $files = $request->files->all('product');
 
             $product = new Product();
             $product->setName($data['name']);
@@ -41,7 +41,8 @@ class AdminController extends AbstractController
             $product->setCreatedAt(new \DateTimeImmutable());
             $product->setUpdatedAt(new \DateTimeImmutable());
 
-            if ($files && $files['image'] instanceof UploadedFile) {
+            // Traitement de l’image si présente
+            if (isset($files['image']) && $files['image'] instanceof UploadedFile) {
                 $filename = uniqid() . '.' . $files['image']->guessExtension();
                 $files['image']->move($this->getParameter('images_directory'), $filename);
                 $product->setImage($filename);
@@ -73,15 +74,24 @@ class AdminController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $product->setName($request->get('name'));
-        $product->setPrice($request->get('price'));
-        $product->setStockXS($request->get('stock_xs'));
-        $product->setStockS($request->get('stock_s'));
-        $product->setStockM($request->get('stock_m'));
-        $product->setStockL($request->get('stock_l'));
-        $product->setStockXL($request->get('stock_xl'));
-        $product->setSlug($slugger->slug($product->getName())->lower());
+        $data = $request->request->all('product');
+        $files = $request->files->all('product');
+
+        $product->setName($data['name']);
+        $product->setPrice($data['price']);
+        $product->setStockXS($data['stock_xs']);
+        $product->setStockS($data['stock_s']);
+        $product->setStockM($data['stock_m']);
+        $product->setStockL($data['stock_l']);
+        $product->setStockXL($data['stock_xl']);
+        $product->setSlug($slugger->slug($data['name'])->lower());
         $product->setUpdatedAt(new \DateTimeImmutable());
+
+        if (isset($files['image']) && $files['image'] instanceof UploadedFile) {
+            $filename = uniqid() . '.' . $files['image']->guessExtension();
+            $files['image']->move($this->getParameter('images_directory'), $filename);
+            $product->setImage($filename);
+        }
 
         $entityManager->flush();
 

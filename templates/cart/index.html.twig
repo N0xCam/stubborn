@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h1>Votre panier</h1>
+<h1 class="cart-title">🛒 Récapitulatif de votre commande</h1>
 
 {% if cart is not empty %}
     {% set total = 0 %}
@@ -15,9 +15,11 @@
                 <p><strong>Prix :</strong> {{ item.product.price }} €</p>
                 <p><strong>Taille :</strong> {{ item.size }}</p>
             </div>
+            <div class="button-card">
             <a href="{{ path('app_cart_remove', { id: item.product.id, size: item.size }) }}">
                 <button style="background-color: #f8d7da; border: 1px solid #f5c2c7; padding: 10px;">RETIRER DU PANIER</button>
             </a>
+            </div>
         </div>
         {% set total = total + item.product.price %}
     {% endfor %}
