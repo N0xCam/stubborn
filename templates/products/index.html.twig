@@ -4,26 +4,23 @@
 
 {% block body %}
 <div class="shop-container">
-    <aside class="filters">
-        <h3>Fourchette de prix</h3>
-        <ul class="price-list">
-            <li><a href="{{ path('app_products', {'price_range': '10_29'}) }}"
-                   class="{{ selected == '10_29' ? 'selected' : '' }}">10 à 29 €</a></li>
-            <li><a href="{{ path('app_products', {'price_range': '30_35'}) }}"
-                   class="{{ selected == '30_35' ? 'selected' : '' }}">30 à 35 €</a></li>
-            <li><a href="{{ path('app_products', {'price_range': '35_50'}) }}"
-                   class="{{ selected == '35_50' ? 'selected' : '' }}">35 à 50 €</a></li>
+    <aside class="shop-filters">
+        <h3 class="shop-filters-title">Fourchette de prix</h3>
+        <ul class="shop-price-list">
+            <li><a href="{{ path('app_products', {'price_range': '10_29'}) }}" class="{{ selected == '10_29' ? 'shop-selected' : '' }}">10 à 29 €</a></li>
+            <li><a href="{{ path('app_products', {'price_range': '30_35'}) }}" class="{{ selected == '30_35' ? 'shop-selected' : '' }}">30 à 35 €</a></li>
+            <li><a href="{{ path('app_products', {'price_range': '35_50'}) }}" class="{{ selected == '35_50' ? 'shop-selected' : '' }}">35 à 50 €</a></li>
         </ul>
     </aside>
 
-    <section class="product-grid">
+    <section class="shop-product-grid">
         {% for product in products %}
-            <div class="product-card-list">
-                <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
-                <p><strong>{{ product.name }}</strong></p>
-                <p>{{ product.price }} €</p>
+            <div class="shop-product-card">
+                <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="shop-product-image">
+                <p class="shop-product-name"><strong>{{ product.name }}</strong></p>
+                <p class="shop-product-price">{{ product.price }} €</p>
                 {% if app.user %}
-                    <a href="{{ path('app_product_show', {id: product.id}) }}" class="voir-btn">VOIR</a>
+                    <a href="{{ path('app_product_show', {id: product.id}) }}" class="shop-btn-view">VOIR</a>
                 {% endif %}
             </div>
         {% else %}
