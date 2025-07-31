@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: stubborn-app
+    env: php
+    buildCommand: composer install
+    startCommand: php -S 0.0.0.0:10000 -t public
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: STRIPE_PUBLIC_KEY
+        value: pk_test_xxxxx
+      - key: STRIPE_SECRET_KEY
+        value: sk_test_xxxxx
