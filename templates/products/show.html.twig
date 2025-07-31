@@ -3,27 +3,32 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
-<div class="product-container">
-    <div class="product-card-show">
-        <div class="left">
+
+<h2 class="title-show"> Notre produit </h2>
+<div class="product-show-container">
+
+
+    <div class="product-show-card">
+        <div class="product-show-left">
             <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
         </div>
 
-        <div class="right">
-            <table>
+        <div class="product-show-right">
+            <table class="product-show-table">
                 <tr>
+                    <td class="product-show-label">Nom</td>
                     <td>{{ product.name }}</td>
                 </tr>
                 <tr>
+                    <td class="product-show-label">Prix</td>
                     <td>{{ product.price }} €</td>
                 </tr>
             </table>
 
-            {{ form_start(form, {'attr': {'class': 'product-form'}}) }}
+            {{ form_start(form, {'attr': {'class': 'product-show-form'}}) }}
             {{ form_row(form.size) }}
-            <button type="submit" class="btn blue">AJOUTER AU PANIER</button>
+            <button type="submit" class="btn product-show-btn">AJOUTER AU PANIER</button>
             {{ form_end(form) }}
-
         </div>
     </div>
 </div>
