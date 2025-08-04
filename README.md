@@ -19,7 +19,7 @@ Pour tester en mode admin : identifiant : admin / mot de passe : admin123
 
 3. Installation et configuration
 Voici les étapes pour installer et configurer le projet en local :
-1. Cloner le dépôt : `git clone https://github.com/moi/stubborn.git`
+1. Cloner le dépôt : `git clone https://github.com/N0xCam/stubborn.git`
 2. Installer les dépendances : `composer install` 3. Copier le fichier `.env` en `.env.local` et adapter les variables (ex. Stripe)
 4. Créer et migrer la base de données : - `php bin/console doctrine:database:create` - `php bin/console doctrine:migrations:migrate`
 5. Charger les fixtures : `php bin/console doctrine:fixtures:load`
